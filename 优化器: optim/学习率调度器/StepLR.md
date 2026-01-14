@@ -1,4 +1,6 @@
 
+**按固定步数/轮数间隔，将学习率乘以衰减因子进行阶梯式下降**，属于硬衰减策略，常用于中小模型或结构化数据的训练场景。
+
 ```python3
 torch.optim.lr_scheduler.StepLR(optimizer: Optimizer,
                                 step_size: int,
@@ -8,11 +10,21 @@ torch.optim.lr_scheduler.StepLR(optimizer: Optimizer,
 
 + optimizer
 
+  关联的优化器实例
+
 + step_size
+
+  每经过```step_size```个单位，就将当前学习率乘以```gamma```（衰减因子），公式如下：
+
+$$lr_{current}=lr_{initial}\times\gamma^{\frac{epoch}{step\\_size}}$$
 
 + gamma
 
+  学习率衰减因子，0.1（常用）、0.5
+
 + last_epoch
+
+  上一次更新的轮数，用于断点续训，-1（默认，从头开始）
 
 ## StepLR 是什么？
 
