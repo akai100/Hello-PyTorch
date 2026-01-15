@@ -90,4 +90,49 @@ model.to("cuda")
 model.half()
 ```
 
+### 6️⃣ 保存 & 加载模型
 
+```python3
+torch.save(model.state_dict(), path)
+model.load_state_dict(torch.load(path))
+```
+
+state_dict 本质是：
+
+```
+{
+  "fc.weight": tensor,
+  "fc.bias": tensor,
+  ...
+}
+```
+## 内部机制
+
+### 1️⃣ 参数注册原理
+
+```python3
+self.w = nn.Parameter(torch.randn(3))
+```
+
+内部等价于：
+
+```python3
+self._parameters["w"] = Parameter
+```
+
+所以：
+
+```
+for p in model.parameters():
+    ...
+```
+
+能遍历到它
+
+### 2️⃣ 子模块注册原理
+self.fc = nn.Linear(10, 3)
+
+
+等价于：
+
+self._modules["fc"] = Linear(...)
