@@ -62,3 +62,37 @@ print(y.grad)  # 可以访问
 **4. in-place 操作可能破坏计算图**
 
   + 如果你对计算图中的 ```tensor``` 做了 in-place 操作，```backward()``` 可能报错或得到错误梯度。
+
+## 4. 参数
+
+### 4.1 retain_graph
+
+当你需要对同一份计算图调用 ```backward()``` 多次时，才需要 ```retain_graph=True```
+
+#### 4.1.1 为什么默认不能多次 backward？
+
+PyTorch 的设计是：
+
++ **反向传播一次后**
+
++ 计算图会被释放（free）
+
++ 节省显存
+
+```python3
+y = f(x)
+y.backward()   # OK
+y.backward()   # ❌ RuntimeError
+```
+
+报错本质是：backward 后，计算图已经被销毁
+
+#### 4.1.2 ```retain_graph=True``` 是干嘛的？
+
+```python3
+y.backward(retain_graph=True)
+```
+
+含义是：**反向传播后，不释放计算图**
+
+这样你可以 再 **backward 一次**
