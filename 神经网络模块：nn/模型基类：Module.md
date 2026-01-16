@@ -79,7 +79,18 @@ model.eval()
 | Dropout   | 随机 / 关闭                   |
 | BatchNorm | 用 batch 统计 / running mean |
 
++ Dropout
 
+  在训练模式下，Dropout 层会随机丢弃一部分神经元，以减少过拟合。
+
+  在 ```eval()``` 模式下，Dropout 层会停止随机丢弃神经元，转为使用所有神经元，这意味着网络在推理时的表现更加稳定。
+
++ BatchNorm
+
+  在训练模式下，BatchNorm 会使用每个 mini-batch 的均值和方差来标准化数据。
+
+  而在 ```eval()`` 模式下，BatchNorm 会使用训练时计算的全局均值和方差，而不是每个 batch 的均值和方差。这有助于推理阶段的稳定性，因为推理时通常是基于固定的统计数据
+  
 📌 ```nn.Module``` 统一管理这个状态
 
 ### 5️⃣ 设备 & dtype 统一管理'
