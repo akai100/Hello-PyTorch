@@ -136,3 +136,36 @@ self.fc = nn.Linear(10, 3)
 等价于：
 
 self._modules["fc"] = Linear(...)
+
+### 3️⃣ buffer（非参数但要保存）
+
+```python3
+self.register_buffer("mask", torch.ones(10))
+```
+
++ 不参与梯度
+
++ 会进 ```state_dict```
+
++ 会随 ```.to(device)```
+
+常见于：BatchNorm、EMA、mask
+
+## 常见问题
+
+### ❌ 1. 忘记 ```super().__init__()```
+
+```python3
+class Bad(nn.Module):
+    def __init__(self):
+        self.fc = nn.Linear(10, 3)  # ❌
+```
+
+会导致：
+
++ 参数不注册
+
++ optimizer 不更新
+
+### ❌ 2. forward 里创建参数
+
