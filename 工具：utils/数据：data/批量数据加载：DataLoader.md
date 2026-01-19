@@ -48,3 +48,10 @@ DataLoader(
 + collate_fn
 
   用于指定如何将多个数据样本合并成一个批次。默认的 collate_fn 会将数据样本堆叠成一个批次，但如果你需要特殊的合并方式，可以自己定义这个函数。
+
+## 遍历 DataLoader
+
+```python3
+for batch_x, batch_y in dataloader:
+    print(batch_x, batch_y)
+```
