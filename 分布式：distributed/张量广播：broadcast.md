@@ -10,6 +10,19 @@ def broadcast(
 ):
 ```
 
+```mermaid
+graph TD
+    A("Rank 0")
+    B("Rank 0")
+    C("Rank 1")
+    D("Rank 2")
+    E("Rank 3")
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+```
+
 ## 参数
 
 + tensor
