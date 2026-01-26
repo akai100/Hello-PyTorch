@@ -12,6 +12,19 @@ def scatter(
 
 scatter 是 分布式通信原语（collective operation），用于 把一个张量列表（每个张量对应一个进程）从一个源进程发送到所有进程。
 
+```mermaid
+graph TD
+   A("Rank 0")
+   B("Rank 0")
+   C("Rank 1")
+   D("Rank 2")
+   E("Rank 3")
+   A --> B
+   A --> C
+   A --> D
+   A ---> E
+```
+
 它的核心思想：**源进程持有 N 份数据，分别发送给 N 个进程。**
 
 + scatter 是 单向分发（不像 all_gather 是收集到每个进程）
